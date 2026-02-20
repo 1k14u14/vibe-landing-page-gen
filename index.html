@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Vibe Landing Page Gen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 font-sans p-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="mb-8 text-center">
+        <h1 class="text-4xl font-black text-gray-900">🚀 AI Vibe Pilot</h1>
+        <p class="text-gray-600 mt-2">
+          Generate professional landing page in seconds.
+        </p>
+      </header>
+
+      <div class="bg-white p-6 rounded-xl shadow-sm space-y-4 mb-8">
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Business Name/Idea</label
+          >
+          <input
+            id="bizName"
+            type="text"
+            placeholder="e.g. Coffee Delivery for Developers"
+            class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >The Vibe</label
+          >
+          <select
+            id="vibe"
+            class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          >
+            <option value="Modern and Dark">Modern and Dark</option>
+            <option value="Bright and Friendly">Bright and Friendly</option>
+            <option value="Minimalist Professional">
+              Minimalist Professional
+            </option>
+            <option value="Neon Cyberpunk">Neon Cyberpunk</option>
+          </select>
+        </div>
+        <div class="flex gap-2">
+          <button
+            onclick="generateVibe()"
+            class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition"
+          >
+            Generate
+          </button>
+          <button
+            onclick="copyToClipboard()"
+            class="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-black transition"
+          >
+            Copy HTML
+          </button>
+        </div>
+      </div>
+
+      <div id="preview-container" class="bg-white p-4">
+        <p class="text-gray-400 text-center mt-20">
+          Your generated preview will appear here...
+        </p>
+      </div>
+    </div>
+
+    <script>
+      function generateVibe() {
+        const name = document.getElementById("bizName").value || "Your Brand";
+        const vibe = document.getElementById("vibe").value;
+        const preview = document.getElementById("preview-container");
+
+        // 1. Data Dictionary: This acts like the "Brain" of your app
+        const vibeSettings = {
+          "Modern and Dark": {
+            bg: "#0f172a",
+            text: "#f8fafc",
+            btn: "bg-indigo-500",
+            font: "tracking-tight",
+          },
+          "Bright and Friendly": {
+            bg: "#fff7ed",
+            text: "#431407",
+            btn: "bg-orange-400",
+            font: "italic",
+          },
+          "Minimalist Professional": {
+            bg: "#ffffff",
+            text: "#171717",
+            btn: "bg-black",
+            font: "font-serif",
+          },
+          "Neon Cyberpunk": {
+            bg: "#000000",
+            text: "#00ff41",
+            btn: "bg-pink-600",
+            font: "uppercase",
+          },
+        };
+
+        const config = vibeSettings[vibe];
+
+        // 2. Dynamic Template COnstruction
+        let template = `
+            <div class="p-12 transition-all duration 500 rounded-lg" style="background-color: ${config.bg}; color: ${config.text}">
+                <nav class="flex justify-between border-b pb-4 mb-8 opacity-70">
+                    <span class="font-bold">${name.toUpperCase()}</span>
+                    <div class="space-x-4"><span>Product</span><span>About</span></div>
+                </nav>
+                <div class="py-10">
+                    <h2 class="text-6xl font-black md-6 ${config.font}">${name}</h2>
+                    <p class="text-xl mb-8 max-w-lg">We are redefining industry with a ${vibe} approach to technology.</p>
+                    <button class="${config.btn} text-white px-10 py-4 rounded-md font-bold hover:scale-105 transition-transform">
+                        Get Started Now
+                    </button>
+                </div>
+                <div class="mt-12 grid grid-cols-3 gap-4 opacity-50 tetx-sm">
+                    <div class="border p-2">Fast Performance</div>
+                    <div class="border p-2">AI Generated</div>
+                    <div class="border p-2">Cloud Native</div>
+                </div>
+            </div>
+        `;
+        preview.innerHTML = template;
+      }
+
+      function copyToClipboard() {
+        const content = document.getElementById("preview-container").innerHTML;
+        if (!content || content.includes("Preview will appear")) {
+          alert("Please generate a vibe first!");
+          return;
+        }
+        navigator.clipboard.writeText(content);
+        alert("✅ HTML Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
